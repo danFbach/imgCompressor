@@ -109,26 +109,43 @@ class img_compress(object):
     @staticmethod
     def get_opts(argv):
         opts = {}  # Empty dictionary to store key-value pairs.
+        cmds = ["", ""]
         while argv:  # While there are arguments left to parse...
+            if argv[0][0] == '-' and argv[0][1] == '-':
+                cmds.insert(0, (argv[0]))
+                break
             if argv[0][0] == '-':  # Found a "-name value" pair.
                 opts[argv[0]] = argv[1]  # Add key and value to the dictionary.
             argv = argv[1:]  # Reduce the argument list by copying it starting from index 1.
-        return opts
+            # print(argv[0])
+        return opts, cmds
 
     @staticmethod
-    def use_opts(myargs):
+    def use_opts(myargs, cmds):
+        print(cmds)
+        print(myargs)
         dir = ''
         dimensions = {"f_width": 1200, "t_width": 700, "m_width": 320, "s_height": 1200, 'gen_height': 1000, 'gen_width': 1000}
-        if '-i' not in myargs and '-d' not in myargs:
-            dir = img_compress.get_image_dir()
-            img_pack = ()
-            if not os.path.basename():
-                img_pack = img_compress.get_files(dir)
-            else:
-                if '-c' in myargs:
-                    img_compress.compress_img(os.path.basename(myargs['-i']), os.path.dirname(myargs['-i']), myargs['-c'])
-                if '-cropped' in myargs:
-                    img_compress.make_new_images(os.path.dirname(dir), os.path.basename(dir), dimensions, myargs['-cropped'])
+        if '--help' in cmds:
+            br='\n\r'
+            print(  'Python Image Compressor v0.1   -   Author lemonSkunnk' + br + br +
+                    '       -d dir' + br +
+                    '               Direcory with image files.' + br +
+                    '               dir = Directory.' + br +
+                    '' + br +
+                    '       -c dir' + br +
+                    '               Compress file(s).' + br +
+                    '               dir = output folder as sub-directory of input directory.')
+        # if '-i' not in myargs and '-d' not in myargs:
+        #     dir = img_compress.get_image_dir()
+        #     img_pack = ()
+        #     if not os.path.basename():
+        #         img_pack = img_compress.get_files(dir)
+        #     else:
+        #         if '-c' in myargs:
+        #             img_compress.compress_img(os.path.basename(myargs['-i']), os.path.dirname(myargs['-i']), myargs['-c'])
+        #         if '-cropped' in myargs:
+        #             img_compress.make_new_images(os.path.dirname(dir), os.path.basename(dir), dimensions, myargs['-cropped'])
         if '-d' in myargs:
             dir = myargs['-d']
             img_pack = img_compress.get_files(dir)
@@ -142,8 +159,8 @@ class img_compress(object):
             print('Compressed ' + os.path.basename(myargs['-i']))
 
 
-opts = img_compress.get_opts(argv)
-img_compress.use_opts(opts)
+opts, cmds = img_compress.get_opts(argv)
+img_compress.use_opts(opts, cmds)
 # dir = img_compress.get_image_dir()
 # img_pack = img_compress.get_files(dir)
 # img_compress.make_new_images(dir ,img_pack, dimensions)
