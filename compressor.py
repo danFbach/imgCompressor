@@ -128,13 +128,18 @@ class img_compress(object):
         dimensions = {"f_width": 1200, "t_width": 700, "m_width": 320, "s_height": 1200, 'gen_height': 1000, 'gen_width': 1000}
         if '--help' in cmds:
             br='\n\r'
-            print(  'Python Image Compressor v0.1   -   Author lemonSkunnk' + br + br +
+            print(  'Python Image Utility v0.1   -   Author: danFbach' + br + br +
                     '       -d dir' + br +
                     '               Direcory with image files.' + br +
                     '               dir = Directory.' + br +
-                    '' + br +
+                    '       -i file' + br +
+                    '               Image file.' + br +
+                    '               file = path to file, including filename.' + br +
                     '       -c dir' + br +
                     '               Compress file(s).' + br +
+                    '               dir = output folder as sub-directory of input directory.' + br +
+                    '       -cropped dir'+ br +
+                    '               Crop image(s).' + br +
                     '               dir = output folder as sub-directory of input directory.')
         # if '-i' not in myargs and '-d' not in myargs:
         #     dir = img_compress.get_image_dir()
